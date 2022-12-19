@@ -1,18 +1,18 @@
 from flask import Flask, render_template, redirect, request, flash
 from package.sqlalchemy_config import setUpDB, addUser
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 app = Flask(__name__)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-UserTable = setUpDB(app)
+User = setUpDB(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return UserTable.query.get(user_id)
+    return User.query.get(user_id)
 
 
 @app.route('/')
@@ -36,14 +36,14 @@ def member(username):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if(request.method == 'POST'):
-        user = UserTable(   
+        user = User(   
             username = request.form['username'],
             password = request.form['password'],
             realname = request.form['realname'],
             email = request.form['email'],
         )
-        searchEmail = UserTable.query.filter_by(email=request.form['email']).first()
-        searchUsername = UserTable.query.filter_by(username=request.form['username']).first()
+        searchEmail = User.query.filter_by(email=request.form['email']).first()
+        searchUsername = User.query.filter_by(username=request.form['username']).first()
         if not searchEmail and not searchUsername:
             addUser(app, user)
             return redirect('/login')
@@ -59,7 +59,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        searchData = UserTable.query.filter_by(email=request.form['email']).first()
+        searchData = User.query.filter_by(email=request.form['email']).first()
         if(searchData):
             if (searchData.password == request.form['password']):
                 # flash('Success to log in')
@@ -82,4 +82,5 @@ def logout():
     return redirect('/login')
 
 if __name__ == "__main__":
-    app.run(debug = True, host='0.0.0.0', port=5555)
+    # app.run(debug = True, host='0.0.0.0', port=5555)
+    app.run(debug=True, host='0.0.0.0', port=5555)

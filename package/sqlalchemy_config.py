@@ -14,7 +14,7 @@ def setUpDB(app):
     user=os.environ.get('mysql_local_user')
     password=os.environ.get('mysql_local_password')
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{user}:{password}@{host}/{database}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqldb://{user}:{password}@{host}/{database}'
     app.config['SECRET_KEY']= 'helloworld'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
     db.init_app(app)
