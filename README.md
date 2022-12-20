@@ -1,9 +1,22 @@
-# flask-login + flask_sqlalchemy + docker
+# Flask-login + Flask-sqlalchemy + Docker
 
 Hi, this project is to demonstrate a simple authentication process with flask-login in use. 
 Flask-login is a session-based authentication which provides common tasks of login, logout process and remembering user's session over a period of time. I'll later provide an example of token-based authentication using flask-jwt-extended. Hope this could help to compare two type of authentication.
 
-### flask-login
+## How to use?
+
+1. Make sure you have docker running on your back. After cloning this branch of this project, you could type in following CMD in your CLI. Everything would be set in a few minutes. 
+```Shell
+docker-compose up
+```
+
+2. Opening your browser and type in
+```
+http://127.0.0.1:5555/login
+```
+Now you could interact with my little flask-app(on docker container)!
+
+## Flask-login
 [Flask-Login 0.7.0 documentation](https://flask-login.readthedocs.io/en/latest/)
 1. To set up its config, followed as official documentation had said.
 ```python
@@ -44,7 +57,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True, nullable=False)
 ```
 
-### flask-sqlalchemy 
+## Flask-sqlalchemy 
 [Flask-SQLAlchemy Documentation(3.0.x)](https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/quickstart/#configure-the-extension)
 
 1. Since I set up SQLalchemy in another file, I wrapped all the things I need in setUpDB and then return User schema
@@ -87,7 +100,7 @@ def addUser(app, user):
         db.session.commit()
 ```
 
-### docker 
+## Docker 
 There are lots of benefits of using container, and Docker is one of the platform that could help us containerize our application. Here only shows how I configure my container using docker and docker-compose. 
 
 1. Build a python-based container which could serve as our flask-app.
