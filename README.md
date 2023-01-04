@@ -83,7 +83,7 @@ def setUpDB(app):
         # Define User schema here
     return User
 ```
-One thing to mark here is that application will need a driver to speak with mysql database. In the connect string, '+mysqldb' is needed and it indicates that driver 'mysqlclient' take charge and it will help sqlalchemy to speak with MySQL.(If driver MySQL-Connector is in use, the connect string should be `mysql+mysqlconnector://<user>:<password>@<host>[:<port>]/<dbname>`)
+One thing to mark here is that application will need a driver to speak with mysql database. In the connect string, `+mysqldb` is needed and it indicates that driver 'mysqlclient' take charge and it will help sqlalchemy to speak with MySQL.(If driver MySQL-Connector is in use, the connect string should be `mysql+mysqlconnector://<user>:<password>@<host>[:<port>]/<dbname>`)
 
 2. Once we define our models and tables, we could call SQLAlchemy.create_all() within application context.
 ```python
